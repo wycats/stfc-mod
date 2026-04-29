@@ -16,6 +16,9 @@
 #include <string>
 #include <string_view>
 #include "defaultconfig.h"
+#if __APPLE__
+#include <CoreGraphics/CoreGraphics.h>
+#endif
 
 namespace DCP = DefaultConfig::Patches;
 namespace DCG = DefaultConfig::Graphics;
@@ -199,7 +202,25 @@ float Config::RefreshDPI()
 
 float Config::GetDPI()
 {
+#if __APPLE__
+  CGDirectDisplayID display = CGMainDisplayID();
+  CGDisplayModeRef  mode    = CGDisplayCopyDisplayMode(display);
+  if (!mode) {
+    return 1.0f;
+  }
+
+  const auto width       = CGDisplayModeGetWidth(mode);
+  const auto pixel_width = CGDisplayModeGetPixelWidth(mode);
+  CGDisplayModeRelease(mode);
+
+  if (width == 0 || pixel_width == 0) {
+    return 1.0f;
+  }
+
+  return static_cast<float>(pixel_width) / static_cast<float>(width);
+#else
   return 1.0f;
+#endif
 }
 #endif
 

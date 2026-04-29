@@ -30,6 +30,7 @@ do
         add_files("src/*.mm")
         -- Link Cocoa framework
         add_frameworks("Cocoa")
+        add_frameworks("CoreGraphics")
     elseif is_plat("linux") then
         add_packages("x11")
     end
