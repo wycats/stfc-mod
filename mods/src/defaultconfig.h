@@ -63,13 +63,13 @@ namespace Patches
   constexpr bool toastbannerhooks           = true;
   constexpr bool uiscalehooks               = true;
   constexpr bool zoomhooks                  = true;
-  constexpr bool loadingscreenbghooks       = true;   // ENABLED - new BlurController approach
+  constexpr bool loadingscreenbghooks       = false;
 } // namespace Patches
 
 namespace LoadingScreen
 {
-  constexpr bool        transition_enabled  = true;   // replace TVC/SlideShow backgrounds
-  constexpr bool        login_enabled       = true;   // replace LoginSequence background
+  constexpr bool        transition_enabled  = false;
+  constexpr bool        login_enabled       = false;
   constexpr const char* image_path          = "";     // Empty = use embedded fallback
 } // namespace LoadingScreen
 

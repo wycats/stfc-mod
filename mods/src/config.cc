@@ -518,7 +518,7 @@ void Config::Load()
   this->installResolutionListFix          = false; // this patch does not work after unity 6 update
   this->installSyncPatches                = true;
   this->installObjectTracker              = true;
-  this->installLoadingScreenBgHooks       = true;
+  this->installLoadingScreenBgHooks       = DCP::loadingscreenbghooks;
 #endif
   
   this->queue_enabled       = get_config_or_default(config, parsed, "control", "queue_enabled", DCC::queue_enabled, write_config);
