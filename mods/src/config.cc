@@ -642,15 +642,21 @@ void Config::Load()
   this->sync_logging            = get_config_or_default(config, parsed, "sync", "logging", DCS::logging, write_config);
   this->sync_resolver_cache_ttl = get_config_or_default(config, parsed, "sync", "resolver_cache_ttl", DCS::resolver_cache_ttl, write_config);
 
-  this->raw_static_capture_enabled     = DCSR::enabled;
-  this->raw_static_capture_directory   = DCSR::directory;
-  this->raw_static_capture_max_bytes   = DCSR::max_bytes;
+  this->raw_static_capture_enabled                  = DCSR::enabled;
+  this->raw_static_capture_event_model_rewards      = DCSR::event_model_rewards;
+  this->raw_static_capture_event_model_rewards_full = DCSR::event_model_rewards_full;
+  this->raw_static_capture_directory                = DCSR::directory;
+  this->raw_static_capture_max_bytes                = DCSR::max_bytes;
   auto raw_static_capture_include_types = std::string(DCSR::include_types);
 
   try {
     if (const auto sync = config["sync"].as_table()) {
       if (const auto raw_static_capture = (*sync)["raw_static_capture"].as_table()) {
         this->raw_static_capture_enabled = (*raw_static_capture)["enabled"].value_or(DCSR::enabled);
+        this->raw_static_capture_event_model_rewards =
+            (*raw_static_capture)["event_model_rewards"].value_or(DCSR::event_model_rewards);
+        this->raw_static_capture_event_model_rewards_full =
+            (*raw_static_capture)["event_model_rewards_full"].value_or(DCSR::event_model_rewards_full);
         this->raw_static_capture_directory =
             (*raw_static_capture)["directory"].value_or(std::string(DCSR::directory));
         this->raw_static_capture_max_bytes = (*raw_static_capture)["max_bytes"].value_or<int64_t>(DCSR::max_bytes);
@@ -666,6 +672,8 @@ void Config::Load()
   sync_table->insert_or_assign("raw_static_capture", toml::table());
   auto raw_static_capture = (*sync_table)["raw_static_capture"].as_table();
   raw_static_capture->insert_or_assign("enabled", this->raw_static_capture_enabled);
+  raw_static_capture->insert_or_assign("event_model_rewards", this->raw_static_capture_event_model_rewards);
+  raw_static_capture->insert_or_assign("event_model_rewards_full", this->raw_static_capture_event_model_rewards_full);
   raw_static_capture->insert_or_assign("directory", this->raw_static_capture_directory);
   raw_static_capture->insert_or_assign("max_bytes", this->raw_static_capture_max_bytes);
   raw_static_capture->insert_or_assign("include_types", raw_static_capture_include_types);

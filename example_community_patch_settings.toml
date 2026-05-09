@@ -710,6 +710,10 @@ verify_ssl = true
 # include_types is a comma-separated numeric EntityGroup type allowlist. Empty means all known static/spec types.
 [sync.raw_static_capture]
 enabled = false
+# Local runtime EventModel reward-bundle logger. Writes event_model_reward_bundles.jsonl to directory.
+event_model_rewards = false
+# Reads EventModel properties through managed getters. Riskier; keep false unless debugging locally.
+event_model_rewards_full = false
 directory = ""
 max_bytes = 52428800
 include_types = ""
